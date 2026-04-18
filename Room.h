@@ -5,8 +5,9 @@
 inline int maxLengthRoom = 21;
 inline int maxHeightRoom = 7;
 inline int maxDoors = 4;
-inline int minLengthRoom = 4;
-inline int minHeightRoom = 3;
+inline int minLengthRoom = 5;
+inline int minHeightRoom = 4;
+inline int minNbDoors = 1;
 
 struct Room
 {

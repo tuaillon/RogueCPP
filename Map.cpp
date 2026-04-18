@@ -5,6 +5,7 @@ Map::Map()
 {
 	m_map = new std::vector<std::vector<char>>( m_max_lvlHeight, 
 		std::vector<char>(m_max_lvlLength, ' ' ));
+	
 	createRooms();
 }
 
@@ -38,7 +39,6 @@ void Map::createRooms()
 
 void Map::createCorridors()
 {
-
 }
 
 
@@ -63,8 +63,9 @@ bool Map::canCreateRoom(int x, int y, Room room)
 	{
 		for ( int j = x; j < room.m_length + x; j++ )
 		{
-			if ( (*m_map)[i][j] != ' ' )
+			if ((*m_map)[i][j] != ' ')
 				return false;
+
 		}
 	}
 
@@ -73,7 +74,6 @@ bool Map::canCreateRoom(int x, int y, Room room)
 
 void Map::drawRoom(int x, int y, Room room)
 {
-	(*m_map)[y][x] = horizontalWall_representation;
 	for ( int i = 0; i < room.m_length; i++ )
 	{
 		(*m_map)[y][x + i] = verticalWall_representation;
@@ -89,24 +89,48 @@ void Map::drawRoom(int x, int y, Room room)
 		(*m_map)[y + i][x + room.m_length - 1] = horizontalWall_representation;
 	}
 
-	(*m_map)[y + room.m_height - 1][x] = horizontalWall_representation;
-	for ( int i = 1; i < room.m_length; i++ )
+	for ( int i = 0; i < room.m_length; i++ )
 	{
 		(*m_map)[y + room.m_height - 1][x + i] = verticalWall_representation;
 	}
 
+	std::unordered_set<int> sidesPicked = {};
+
 	for ( int i = 0; i < room.m_nbDoors; i++ )
 	{
-		int doorX = 1;
-		int doorY = 1;
+		int pickedSide = rand() % 4;
 
-		if (room.m_length > 2)
-			doorX = (rand() % (room.m_length - 2)) + 1;
-			
-		if (room.m_height > 2)
-			doorY = (rand() % (room.m_height - 2)) + 1;
+		while ( sidesPicked.contains(pickedSide) )
+		{
+			pickedSide = rand() % 4;
+		}
 
-		(*m_map)[y + doorY][x + doorX] = door_representation;
+		sidesPicked.insert(pickedSide);
+
+		int position;
+
+		switch (pickedSide)
+		{
+		case 0: //top
+			position = (rand() % (room.m_length - 2)) + 1;
+			(*m_map)[y][x + position] = door_representation;
+			break;
+
+		case 1: //bottom
+			position = (rand() % (room.m_height - 2)) + 1;
+			(*m_map)[y + position][x + room.m_length - 1] = door_representation;
+			break;
+
+		case 2: //right
+			position = (rand() % (room.m_length - 2)) + 1;
+			(*m_map)[y + room.m_height - 1][x + position] = door_representation;
+			break;
+
+		case 3: //left
+			position = (rand() % (room.m_height - 2)) + 1;
+			(*m_map)[y + position][x] = door_representation;
+			break;
+		}
 	}
 }
  
