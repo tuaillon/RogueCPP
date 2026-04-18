@@ -1,9 +1,7 @@
 #include "InputHandler.h"
 
 
-
-
-bool input::InputHandler::isKeyPressed()
+bool input::InputHandler::isKeyPressed(std::string key)
 {
 	return false;
 }

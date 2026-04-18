@@ -2,7 +2,7 @@
 
 Room::Room()
 {
-	m_height = rand() % maxHeightRoom;
-	m_length = rand() % maxLengthRoom;
+	m_height = (rand() % maxHeightRoom) + minHeightRoom;
+	m_length = (rand() % maxLengthRoom) + minLengthRoom;
 	m_nbDoors = rand() % maxDoors;
 }

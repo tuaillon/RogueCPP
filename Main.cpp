@@ -1,10 +1,15 @@
 #include <iostream>
+#include <ctime>
 
 #include "Player.h"
+#include "Map.h"
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    srand(time(nullptr));
+
+	Map map;
+    map.display();
     player::Player player;
     player.logStats();
 
