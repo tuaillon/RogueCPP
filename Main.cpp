@@ -9,8 +9,18 @@ int main()
     srand(time(nullptr));
 
 	Map map;
-    map.display();
     player::Player player;
-    player.logStats();
+	bool gameRunning = true;
+
+	while (gameRunning)
+	{
+		map.display();
+		player.logStats();
+
+		std::cout << "Awaiting for input...\n";
+		
+		char input;
+		std::cin >> input;
+	}
 
 }

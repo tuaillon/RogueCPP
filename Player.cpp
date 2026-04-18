@@ -1,5 +1,23 @@
 #include "Player.h"
 
+bool player::Player::canPerformAction(Map& map, char action)
+{
+	switch (action)
+	{
+		case inputs::UP:
+			break;
+
+		case inputs::DOWN:
+			break;
+
+		case inputs::LEFT:
+			break;
+
+		case inputs::RIGHT:
+			break;
+	}
+}
+
 player::Player::Player()
 {
 	m_level = 1;

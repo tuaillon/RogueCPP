@@ -1,7 +1,7 @@
 #pragma once
 
 #include <iostream>
-
+#include "map.h"
 
 namespace player
 {
@@ -14,9 +14,26 @@ namespace player
 
 	};
 
+	enum action
+	{
+		UP,
+		DOWN,
+		LEFT,
+		RIGHT
+	};
+
+	enum inputs
+	{
+		UP = 'z',
+		DOWN = 's',
+		LEFT = 'q',
+		RIGHT = 'd'
+	};
+
+
 	inline std::ostream& operator<<(std::ostream& os, status s)
 	{
-		switch ( s )
+		switch (s)
 		{
 		case WEAK:      return os << "WEAK";
 		case HUNGRY:    return os << "HUNGRY";
@@ -31,11 +48,15 @@ namespace player
 
 	private:
 
+		int m_x;
+		int m_y;
 		int m_level;
 		int m_gold;
 		int m_hp;
 		int m_str;
 		status m_status;
+
+		bool canPerformAction(Map& map, char action);
 
 	public:
 
