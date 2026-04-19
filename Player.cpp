@@ -4,18 +4,20 @@ bool player::Player::canPerformAction(Map& map, char action)
 {
 	switch (action)
 	{
-		case inputs::UP:
+		case action::UP:
 			break;
 
-		case inputs::DOWN:
+		case action::DOWN:
 			break;
 
-		case inputs::LEFT:
+		case action::LEFT:
 			break;
 
-		case inputs::RIGHT:
+		case action::RIGHT:
 			break;
 	}
+
+	return true;
 }
 
 player::Player::Player()
@@ -30,7 +32,7 @@ player::Player::Player()
 void player::Player::logStats()
 {
 	std::cout << "Level " << m_level << "   Gold: " << m_gold <<
-		"   Hp: " << m_hp << "   Str: " << m_str << "   Status : " << m_status;
+		"   Hp: " << m_hp << "   Str: " << m_str << "   Status : " << m_status << "\n";
 
 }
  

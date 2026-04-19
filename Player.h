@@ -16,14 +16,6 @@ namespace player
 
 	enum action
 	{
-		UP,
-		DOWN,
-		LEFT,
-		RIGHT
-	};
-
-	enum inputs
-	{
 		UP = 'z',
 		DOWN = 's',
 		LEFT = 'q',
