@@ -6,7 +6,7 @@ bool Player::canPerformMove(Map& map, char action)
 	int newX = m_x;
 	int newY = m_y;
 
-	switch (action)
+	switch ( action )
 	{
 	case action::UP:
 		newY--;
@@ -24,10 +24,10 @@ bool Player::canPerformMove(Map& map, char action)
 		return false;
 	}
 
-	if (newX < 0 || newY < 0)
+	if ( newX < 0 || newY < 0 )
 		return false;
 
-	if (newX >= map.m_max_lvlLength || newY >= map.m_max_lvlHeight)
+	if ( newX >= map.m_max_lvlLength || newY >= map.m_max_lvlHeight )
 		return false;
 
 	return true;
@@ -43,15 +43,19 @@ void Player::performMove(Map& map, char action)
 
 	switch ( action )
 	{
+
 	case action::UP:
 		newY--;
 		break;
+
 	case action::DOWN:
 		newY++;
 		break;
+
 	case action::LEFT:
 		newX--;
 		break;
+
 	case action::RIGHT:
 		newX++;
 		break;

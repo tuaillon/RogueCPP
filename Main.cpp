@@ -27,6 +27,8 @@ int main()
 
 		player.performMove(map, input);
 
+		system("cls"); //cear console
+
 	}
 
 }
