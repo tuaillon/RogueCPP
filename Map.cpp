@@ -1,12 +1,19 @@
 #include "Map.h"
-#include "Room.h"
+#include "Player.h"
 
-Map::Map()
+Map::Map(Player& player)
 {
 	m_map = new std::vector<std::vector<char>>( m_max_lvlHeight, 
 		std::vector<char>(m_max_lvlLength, ' ' ));
 	
 	createRooms();
+
+	std::pair<int, int> playerPosition = randomPlayerPosition();
+	player.setPosition(playerPosition.first, playerPosition.second);
+	
+	updatePlayerPosition(playerPosition);
+
+
 }
 
 Map::~Map()
@@ -39,6 +46,16 @@ void Map::createRooms()
 
 void Map::createCorridors()
 {
+}
+
+void Map::updatePlayerPosition(std::pair<int, int> newPosition)
+{
+
+	(*m_map)[lastTileVisited.first.second][lastTileVisited.first.first] = lastTileVisited.second;
+	lastTileVisited = std::make_pair(std::make_pair(newPosition.first, newPosition.second), 
+		(*m_map)[newPosition.second][newPosition.first]);
+
+	(*m_map)[newPosition.second][newPosition.first] = Player::representation;
 }
 
 
@@ -109,7 +126,7 @@ void Map::drawRoom(int x, int y, Room room)
 
 		int position;
 
-		switch (pickedSide)
+		switch ( pickedSide )
 		{
 		case 0: //top
 			position = (rand() % (room.m_length - 2)) + 1;
@@ -131,6 +148,19 @@ void Map::drawRoom(int x, int y, Room room)
 			(*m_map)[y + position][x] = door_representation;
 			break;
 		}
+	}
+}
+
+std::pair<int, int> Map::randomPlayerPosition()
+{
+	int x, y;
+
+	while ( true )
+	{
+		x = rand() % m_max_lvlLength;
+		y = rand() % m_max_lvlHeight;
+		if ( (*m_map)[y][x] == floor_representation )
+			return std::pair<int, int>(x, y);
 	}
 }
  

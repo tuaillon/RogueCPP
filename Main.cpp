@@ -6,12 +6,13 @@
 #include "Player.h"
 #include "Map.h"
 
-int main()
+int main() 
 {
 	srand(time(nullptr));
 
-	Map map;
-	player::Player player;
+	Player player;
+	Map map(player);
+
 	bool gameRunning = true;
 
 	while ( gameRunning )
@@ -23,6 +24,9 @@ int main()
 
 		char input;
 		input = _getch();
+
+		player.performMove(map, input);
+
 	}
 
 }
