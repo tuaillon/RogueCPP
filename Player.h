@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+#include "Entity.h"
+
 class Map;
 
 enum status
@@ -34,13 +36,11 @@ inline std::ostream& operator<<(std::ostream& os, status s)
 	}
 }
 
-class Player
+class Player : Entity
 {
 
 private:
 
-	int m_x;
-	int m_y;
 	int m_level;
 	int m_gold;
 	int m_hp;
