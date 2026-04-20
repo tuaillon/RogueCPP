@@ -11,15 +11,19 @@ bool Player::canPerformMove(Map& map, char action)
 	case action::UP:
 		newY--;
 		break;
+
 	case action::DOWN:
 		newY++;
 		break;
+
 	case action::LEFT:
 		newX--;
 		break;
+
 	case action::RIGHT:
 		newX++;
 		break;
+
 	default:
 		return false;
 	}
