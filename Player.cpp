@@ -79,7 +79,7 @@ Player::Player()
 	m_level = 1;
 	m_gold = 0;
 	m_status = status::NORMAL;
-	m_str = 16;
+	m_atk = 16;
 	m_hp = 12;
 	m_x = 0;
 	m_y = 0;
@@ -89,6 +89,6 @@ Player::Player()
 void Player::logStats()
 {
 	std::cout << "Level " << m_level << "   Gold: " << m_gold <<
-		"   Hp: " << m_hp << "   Str: " << m_str << "   Status : " << m_status << "\n";
+		"   Hp: " << m_hp << "   Str: " << m_atk << "   Status : " << m_status << "\n";
 
 }

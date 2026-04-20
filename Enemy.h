@@ -2,13 +2,17 @@
 
 #include "Entity.h"
 
-enum EnemyType
+enum Behaviour
 {
-	SNAKE = 'S'
+	STILL,
+	AGRESSIVE,
+	RANDOM
 };
 
 
 class Enemy : Entity
 {
-
+public:
+	Enemy();
+	~Enemy();
 };

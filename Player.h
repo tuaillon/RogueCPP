@@ -43,8 +43,6 @@ private:
 
 	int m_level;
 	int m_gold;
-	int m_hp;
-	int m_str;
 	status m_status;
 
 	bool canPerformMove(Map& map, char action);
@@ -60,6 +58,21 @@ public:
 	{
 		m_x = x;
 		m_y = y;
+	}
+
+	void addHealth(int amount)
+	{
+		m_hp += amount;
+	}
+
+	void addDefense(int amount)
+	{
+		m_def += amount;
+	}
+	
+	void addAttack(int amount)
+	{
+		m_atk += amount;
 	}
 
 	void logStats();
