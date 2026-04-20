@@ -24,9 +24,17 @@ public:
 
 
 	void display();	
-
+	
+	//terminal size
 	static const int m_max_lvlHeight = 50;
 	static const int m_max_lvlLength = 100;
+
+	inline const static char floor_representation = '.';
+	inline const static char door_representation = '+';
+	inline const static char horizontalWall_representation = '|';
+	inline const static char verticalWall_representation = '-';
+	inline const static char path_representation = '#';
+
 
 private:
 
@@ -38,13 +46,6 @@ private:
 
 	int m_numRooms = 10;
 
-	//terminal size
 	int m_min_SpacingBetweenRooms = 4;
-
-	inline const static char floor_representation = '.';
-	inline const static char door_representation = '+';
-	inline const static char horizontalWall_representation = '|';
-	inline const static char verticalWall_representation = '-';
-	inline const static char path_representation = '#';
 
 };

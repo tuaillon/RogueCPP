@@ -30,6 +30,10 @@ bool Player::canPerformMove(Map& map, char action)
 	if ( newX >= map.m_max_lvlLength || newY >= map.m_max_lvlHeight )
 		return false;
 
+	if ((*map.m_map)[newX][newY] == map.horizontalWall_representation || 
+		(*map.m_map)[newX][newY] == map.verticalWall_representation)
+		return false;
+
 	return true;
 }
 
