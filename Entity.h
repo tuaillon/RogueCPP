@@ -13,7 +13,7 @@ public:
     }
     virtual void performAttack(Entity& entity)
     {
-        entity.takeDamage(m_hp);
+        entity.takeDamage(m_atk);
     }
 
 protected:

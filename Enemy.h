@@ -1,22 +1,10 @@
 #pragma once
 
 #include "Entity.h"
-#include "Player.h";
 
-enum Behaviour
+class Enemy : public Entity
 {
-	STILL,
-	AGRESSIVE,
-	RANDOM
-};
-
-class Enemy : Entity
-{
-private:
-	Behaviour m_behaviour;
-
 public:
+	virtual ~Enemy() = default;
 
-	Enemy();
-	~Enemy();
 };

@@ -10,7 +10,7 @@ protected:
 
 public:
 
-	virtual ~Item();
+	virtual ~Item() = default;
 
 	char representation;
 	virtual void use(Player& player);

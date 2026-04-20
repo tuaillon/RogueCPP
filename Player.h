@@ -48,8 +48,9 @@ private:
 
 	bool canPerformMove(Map& map, char action);
 
-
 public:
+
+	inline static const char representation = '@';
 
 	void takeDamage(int damage) override;
 
@@ -79,8 +80,5 @@ public:
 	}
 
 	void logStats();
-
-
-	inline static const char representation = '@';
 
 };
