@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Entity.h"
+#include "Player.h";
 
 enum Behaviour
 {
@@ -9,10 +10,13 @@ enum Behaviour
 	RANDOM
 };
 
-
 class Enemy : Entity
 {
+private:
+	Behaviour m_behaviour;
+
 public:
+
 	Enemy();
 	~Enemy();
 };

@@ -41,6 +41,7 @@ class Player : Entity
 
 private:
 
+	int m_def;
 	int m_level;
 	int m_gold;
 	status m_status;
@@ -49,6 +50,8 @@ private:
 
 
 public:
+
+	void takeDamage(int damage) override;
 
 	void performMove(Map& map, char action);
 		

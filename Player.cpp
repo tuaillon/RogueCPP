@@ -41,6 +41,13 @@ bool Player::canPerformMove(Map& map, char action)
 	return true;
 }
 
+void Player::takeDamage(int damage)
+{
+	int actualDamage = damage - m_def;
+	if ( actualDamage < 0 )
+		m_hp -= actualDamage;
+}
+
 void Player::performMove(Map& map, char action)
 {
 	if ( !canPerformMove(map, action) )

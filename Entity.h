@@ -4,9 +4,16 @@ class Entity
 {
 public:
 
-    virtual bool isAlive()
+    virtual bool isAlive(){return m_hp > 0;}
+
+
+    virtual void takeDamage(int damage)
     {
-        return m_hp > 0;
+        m_hp -= damage;
+    }
+    virtual void performAttack(Entity& entity)
+    {
+        entity.takeDamage(m_hp);
     }
 
 protected:
@@ -15,6 +22,5 @@ protected:
     int m_y;
 
     int m_hp;
-    int m_def;
     int m_atk;
 };
