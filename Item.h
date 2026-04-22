@@ -68,6 +68,9 @@ public:
 class ItemCreator
 {
 
+private:
+	ItemCreator();
+
 public:
 
 	static Item* createRandomItem()
