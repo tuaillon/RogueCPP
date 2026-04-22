@@ -5,6 +5,7 @@
 #include <iostream>
 
 #include "Room.h"
+#include "Item.h"
 
 class Player;
 
@@ -17,7 +18,6 @@ public:
 	Map(Player& player);
 	~Map();
 
-	void createRooms();
 	void createCorridors();
 
 	void updatePlayerPosition(std::pair<int, int> newPosition);
@@ -38,10 +38,12 @@ public:
 
 private:
 
+	void initItems();
+	void createRooms();
 	bool canCreateRoom(int x, int y, Room room);
 	void drawRoom(int x, int y, Room room);
 
-	std::pair<int, int> randomPlayerPosition();
+	std::pair<int, int> randomReachablePosition();
 	std::pair<std::pair<int, int>, char> lastTileVisited;
 
 	int m_numRooms = 10;

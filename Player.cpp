@@ -44,7 +44,7 @@ bool Player::canPerformMove(Map& map, char action)
 void Player::takeDamage(int damage)
 {
 	int actualDamage = damage - m_def;
-	if ( actualDamage < 0 )
+	if ( actualDamage > 0 )
 		m_hp -= actualDamage;
 }
 
@@ -90,6 +90,7 @@ Player::Player()
 	m_hp = 12;
 	m_x = 0;
 	m_y = 0;
+	m_def = 0;
 
 }
 

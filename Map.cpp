@@ -8,17 +8,31 @@ Map::Map(Player& player)
 	
 	createRooms();
 
-	std::pair<int, int> playerPosition = randomPlayerPosition();
+	std::pair<int, int> playerPosition = randomReachablePosition();
 	player.setPosition(playerPosition.first, playerPosition.second);
+
+	initItems();
 	
 	updatePlayerPosition(playerPosition);
-
 
 }
 
 Map::~Map()
 {
 	delete m_map;
+}
+
+void Map::initItems()
+{
+	int nbItemsOnMap = rand() % Item::max_items;
+
+	for ( int i = 0; i < nbItemsOnMap; i++ )
+	{
+		auto item = ItemCreator::createRandomItem();
+		std::pair<int, int> itemPos = randomReachablePosition();
+		(*m_map)[itemPos.second][itemPos.first] = item->getRepresentation();
+		delete item;
+	}
 }
 
 void Map::createRooms()
@@ -151,7 +165,7 @@ void Map::drawRoom(int x, int y, Room room)
 	}
 }
 
-std::pair<int, int> Map::randomPlayerPosition()
+std::pair<int, int> Map::randomReachablePosition()
 {
 	int x, y;
 
