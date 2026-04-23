@@ -24,7 +24,7 @@ Map::~Map()
 
 void Map::initItems()
 {
-	int nbItemsOnMap = rand() % Item::max_items;
+	int nbItemsOnMap = rand() % Item::max_items + m_minItems;
 
 	for ( int i = 0; i < nbItemsOnMap; i++ )
 	{

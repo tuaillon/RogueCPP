@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "Map.h"
 #include "Utility.h"
+#include "SaveHandler.h"
 
 int main()
 {
@@ -56,7 +57,12 @@ int main()
 
 		player.performMove(map, input);
 
+#ifdef __linux__
+		system("clear");
+#elif _WIN32
 		system("cls");
+#endif
+
 	}
 
 	return 0;

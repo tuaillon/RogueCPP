@@ -49,7 +49,7 @@ private:
 	std::map<std::pair<int, int>, Item*> m_itemsOnMap;
 
 	int m_numRooms = 10;
-
+	int m_minItems = 2;
 	int m_min_SpacingBetweenRooms = 4;
 
 };
