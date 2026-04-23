@@ -78,7 +78,7 @@ void Player::performMove(Map& map, char action)
 	m_y = newY;
 	m_x = newX;
 
-	map.updatePlayerPosition(std::make_pair(newX, newY));
+	map.updatePlayerPosition(std::make_pair(newX, newY), *this);
 }
 
 Player::Player()
@@ -97,6 +97,6 @@ Player::Player()
 void Player::logStats()
 {
 	std::cout << "Level " << m_level << "   Gold: " << m_gold <<
-		"   Hp: " << m_hp << "   Str: " << m_atk << "   Status : " << m_status << "\n";
+		"   Hp: " << m_hp << "   Str: " << m_atk << "   Def: " << m_def << "   Status : " << m_status << "\n";
 
 }

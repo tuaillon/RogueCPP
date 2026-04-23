@@ -13,7 +13,7 @@ Map::Map(Player& player)
 
 	initItems();
 	
-	updatePlayerPosition(playerPosition);
+	updatePlayerPosition(playerPosition, player);
 
 }
 
@@ -31,7 +31,7 @@ void Map::initItems()
 		auto item = ItemCreator::createRandomItem();
 		std::pair<int, int> itemPos = randomReachablePosition();
 		(*m_map)[itemPos.second][itemPos.first] = item->getRepresentation();
-		delete item;
+		m_itemsOnMap.insert({ itemPos, item });
 	}
 }
 
@@ -62,12 +62,19 @@ void Map::createCorridors()
 {
 }
 
-void Map::updatePlayerPosition(std::pair<int, int> newPosition)
+void Map::updatePlayerPosition(std::pair<int, int> newPosition, Player& player)
 {
-
 	(*m_map)[lastTileVisited.first.second][lastTileVisited.first.first] = lastTileVisited.second;
 	lastTileVisited = std::make_pair(std::make_pair(newPosition.first, newPosition.second), 
 		(*m_map)[newPosition.second][newPosition.first]);
+	
+	//item handling
+	if ( const auto it = m_itemsOnMap.find(newPosition); it != m_itemsOnMap.end() )
+	{
+		it->second->use(player);
+		m_itemsOnMap.erase(it);
+		lastTileVisited.second = floor_representation;
+	}
 
 	(*m_map)[newPosition.second][newPosition.first] = Player::representation;
 }

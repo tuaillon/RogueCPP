@@ -3,6 +3,7 @@
 #include <vector>
 #include <unordered_set>
 #include <iostream>
+#include <map>
 
 #include "Room.h"
 #include "Item.h"
@@ -20,7 +21,7 @@ public:
 
 	void createCorridors();
 
-	void updatePlayerPosition(std::pair<int, int> newPosition);
+	void updatePlayerPosition(std::pair<int, int> newPosition, Player& player);
 
 
 	void display();	
@@ -45,6 +46,7 @@ private:
 
 	std::pair<int, int> randomReachablePosition();
 	std::pair<std::pair<int, int>, char> lastTileVisited;
+	std::map<std::pair<int, int>, Item*> m_itemsOnMap;
 
 	int m_numRooms = 10;
 
