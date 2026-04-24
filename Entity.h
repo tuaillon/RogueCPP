@@ -2,7 +2,18 @@
 
 class Entity
 {
+
+protected:
+
+    int m_x;
+    int m_y;
+
+    int m_hp;
+    int m_atk;
+
 public:
+
+    inline static const char representation = ' ';
 
     virtual bool isAlive(){return m_hp > 0;}
 
@@ -15,12 +26,4 @@ public:
     {
         entity.takeDamage(m_atk);
     }
-
-protected:
-
-    int m_x;
-    int m_y;
-
-    int m_hp;
-    int m_atk;
 };
