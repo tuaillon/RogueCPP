@@ -3,11 +3,13 @@ using namespace std::filesystem;
 
 Player SaveHandler::fromFile(const std::string& filename)
 {
-	return Player();
+	createSaveDirectory();
+
 }
 
 void SaveHandler::ToFile(const Player& player)
 {
+
 }
 
 void SaveHandler::createSaveDirectory()
