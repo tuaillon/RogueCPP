@@ -82,14 +82,39 @@ void Map::updatePlayerPosition(std::pair<int, int> newPosition, Player& player)
 
 void Map::display()
 {
+	std::stringstream buffer;
+
 	for ( const auto& row : *m_map )
 	{
 		for ( const auto& cell : row )
 		{
-			std::cout << cell;
+			switch ( cell ) //color handling
+			{
+			case Player::representation:
+				buffer << YELLOW << cell << RESET;
+				break;
+			case floor_representation:
+				buffer << GREEN << cell << RESET;
+				break;
+			case door_representation:
+				buffer << BOLDYELLOW << cell << RESET;
+				break;
+			case horizontalWall_representation:
+				buffer << BROWN << cell << RESET;
+				break;
+			case verticalWall_representation:
+				buffer << BROWN << cell << RESET;
+				break;
+			case path_representation:
+				buffer << BOLDMAGENTA << cell << RESET;
+				break;
+			default:
+				buffer << BOLDWHITE << cell << RESET;
+			}
 		}
-		std::cout << "\n";
+		buffer << "\n";
 	}
+	std::cout << buffer.str();
 }
 
 bool Map::canCreateRoom(int x, int y, Room room)

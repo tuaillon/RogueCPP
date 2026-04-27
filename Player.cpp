@@ -96,7 +96,10 @@ Player::Player()
 
 void Player::logStats()
 {
-	std::cout << "Level " << m_level << "   Gold: " << m_gold <<
-		"   Hp: " << m_hp << "   Str: " << m_atk << "   Def: " << m_def << "   Status : " << m_status << "\n";
+	std::cout << "Level " << BLUE << m_level << RESET << "   Gold: " << 
+		YELLOW << m_gold << RESET <<
+		"   Hp: " << RED << m_hp << RESET << "   Str: " << MAGENTA <<
+		m_atk << RESET << "   Def: " << WHITE << m_def << RESET <<
+		"   Status : " << BOLDCYAN << m_status << RESET << "\n";
 
 }

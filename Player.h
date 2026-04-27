@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "Entity.h"
+#include "Utility.h"
 
 class Map;
 

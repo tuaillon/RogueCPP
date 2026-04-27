@@ -4,9 +4,11 @@
 #include <unordered_set>
 #include <iostream>
 #include <map>
+#include <sstream>
 
 #include "Room.h"
 #include "Item.h"
+#include "Utility.h"
 
 class Player;
 
