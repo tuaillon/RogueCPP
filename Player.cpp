@@ -85,7 +85,7 @@ Player::Player()
 {
 	m_level = 1;
 	m_gold = 0;
-	m_status = status::NORMAL;
+	m_status = Status::NORMAL;
 	m_atk = 16;
 	m_hp = 12;
 	m_x = 0;

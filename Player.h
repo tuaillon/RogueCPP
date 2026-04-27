@@ -6,7 +6,7 @@
 
 class Map;
 
-enum status
+enum Status
 {
 	WEAK,
 	HUNGRY,
@@ -24,7 +24,7 @@ enum action
 };
 
 
-inline std::ostream& operator<<(std::ostream& os, status s)
+inline std::ostream& operator<<(std::ostream& os, Status s)
 {
 	switch ( s )
 	{
@@ -44,7 +44,7 @@ private:
 	int m_def;
 	int m_level;
 	int m_gold;
-	status m_status;
+	Status m_status;
 
 	bool canPerformMove(Map& map, char action);
 

@@ -4,7 +4,7 @@ using namespace std::filesystem;
 Player SaveHandler::fromFile(const std::string& filename)
 {
 	createSaveDirectory();
-
+	return Player();
 }
 
 void SaveHandler::ToFile(const Player& player)
