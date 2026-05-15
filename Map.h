@@ -9,6 +9,7 @@
 #include "Room.h"
 #include "Item.h"
 #include "Utility.h"
+#include "Enemy.h"
 
 class Player;
 
@@ -41,6 +42,7 @@ public:
 
 private:
 
+	void initEnemies();
 	void initItems();
 	void createRooms();
 	bool canCreateRoom(int x, int y, Room room);
@@ -49,7 +51,9 @@ private:
 	std::pair<int, int> randomReachablePosition();
 	std::pair<std::pair<int, int>, char> lastTileVisited;
 	std::map<std::pair<int, int>, Item*> m_itemsOnMap;
+	std::map<std::pair<int, int>, Enemy*> m_enemiesOnMap;
 
+	int m_minEnemies = 4;
 	int m_numRooms = 10;
 	int m_minItems = 2;
 	int m_min_SpacingBetweenRooms = 4;

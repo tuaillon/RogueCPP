@@ -1,11 +1,8 @@
 #pragma once
 
-#include <stdlib.h>
-
 #include "Entity.h"
 
-
-enum EnemyBehaviour
+enum class EnemyBehaviour
 {
 	STILL,
 	RANDOM,
@@ -20,6 +17,7 @@ private:
 public:
 	virtual ~Enemy() = default;
 
+	virtual char getRepresentation() const { return 'E'; }
 };
 
 class Kestrel : public Enemy
@@ -31,8 +29,10 @@ private:
 
 public:
 	inline static const char representation = 'K';
-	Kestrel() = default;
 
+	char getRepresentation() const override { return representation; }
+
+	Kestrel() = default;
 };
 
 class Bat : public Enemy
@@ -44,41 +44,41 @@ private:
 
 public:
 	inline static const char representation = 'B';
+
+	char getRepresentation() const override { return representation; }
+
 	Bat() = default;
-
 };
-
 
 class EnemyCreator
 {
-	public:
-
-	static Enemy createEnemyByRepresentation(char representation)
+public:
+	static Enemy* createEnemyByRepresentation(char representation)
 	{
 		switch ( representation )
 		{
 		case Kestrel::representation:
-
-			return Kestrel();
+			return new Kestrel();
 
 		case Bat::representation:
-			return Bat();
+			return new Bat();
+
 		default:
-			return Enemy();
+			return new Enemy();
 		}
 	}
 
-	static Enemy createRandomEnemy()
+	static Enemy* createRandomEnemy()
 	{
 		int randomValue = rand() % 2;
 		switch ( randomValue )
 		{
 		case 0:
-			return Kestrel();
+			return new Kestrel();
 		case 1:
-			return Bat();
+			return new Bat();
 		default:
-			return Enemy();
+			return new Enemy();
 		}
 	}
 };

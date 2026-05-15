@@ -12,6 +12,7 @@ Map::Map(Player& player)
 	player.setPosition(playerPosition.first, playerPosition.second);
 
 	initItems();
+	initEnemies();
 	
 	updatePlayerPosition(playerPosition, player);
 
@@ -22,11 +23,25 @@ Map::~Map()
 	delete m_map;
 }
 
+void Map::initEnemies()
+{
+	int nbEnemiesOnMap = rand() % m_minEnemies + m_minEnemies;
+
+	for ( int i = 0; i < nbEnemiesOnMap; i++ )
+	{
+		auto enemy = EnemyCreator::createRandomEnemy();
+		std::pair<int, int> enemyPos = randomReachablePosition();
+		(*m_map)[enemyPos.second][enemyPos.first] = enemy->getRepresentation();
+		m_enemiesOnMap.insert({ enemyPos, enemy });
+	}
+}
+
+
 void Map::initItems()
 {
 	int nbItemsOnMap = rand() % Item::max_items + m_minItems;
 
-	for ( int i = 0; i < nbItemsOnMap; i++ )
+	for ( int i = 0; i < nbItemsOnMap; i++ ) 
 	{
 		auto item = ItemCreator::createRandomItem();
 		std::pair<int, int> itemPos = randomReachablePosition();
