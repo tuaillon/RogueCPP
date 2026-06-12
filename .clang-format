@@ -1,0 +1,17 @@
+BasedOnStyle: LLVM
+
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+
+SpaceAfterControlStatementKeyword: true
+SpaceBeforeParens: ControlStatements
+SpacesInConditionalStatement: true
+
+BreakBeforeBraces: Allman
+
+AllowShortIfStatementsOnASingleLine: true
+RemoveBracesLLVM: true
+
+AllowShortLoopsOnASingleLine: false
+ColumnLimit: 0

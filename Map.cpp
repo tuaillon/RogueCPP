@@ -141,7 +141,7 @@ bool Map::canCreateRoom(int x, int y, Room room)
 	{
 		for ( int j = x; j < room.m_length + x; j++ )
 		{
-			if ((*m_map)[i][j] != ' ')
+			if ( (*m_map)[i][j] != ' ' )
 				return false;
 
 		}
