@@ -1,5 +1,5 @@
 #include "Player.h"
-#include "Map.h"
+#include "../Map.h"
 
 bool Player::canPerformMove(Map& map, char action)
 {

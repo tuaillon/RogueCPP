@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Entity.h"
+#include "Strategies/IEnemyStrategy.h"
 
 enum class EnemyBehaviour
 {
@@ -13,11 +14,29 @@ class Enemy : public Entity
 {
 private:
 	EnemyBehaviour m_behaviour;
+    IEnemyStrategy* m_strategy;
 
 public:
 	virtual ~Enemy() = default;
+    Enemy(IEnemyStrategy* strategy) : m_strategy(strategy) {}
+
+    void executeStrategy(Map& map, Player& player){ m_strategy->executeStrategy(map, player); }
 
 	virtual char getRepresentation() const { return 'E'; }
+
+    bool isNextToPlayer(Map& map, Player& player)
+    {
+        std::pair<int, int> playerPos = player.getPosition();
+
+        
+
+    }
+
+
+protected:
+
+
+
 };
 
 class Kestrel : public Enemy

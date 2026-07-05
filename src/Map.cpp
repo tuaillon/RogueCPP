@@ -1,5 +1,5 @@
 #include "Map.h"
-#include "Player.h"
+#include "Entity/Player.h"
 
 Map::Map(Player& player)
 {

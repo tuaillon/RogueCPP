@@ -33,10 +33,10 @@
 
 #endif
 
-#include "Player.h"
+#include "Entity/Player.h"
 #include "Map.h"
-#include "Utility.h"
 #include "SaveHandler.h"
+#include "Utility.h"
 
 int main()
 {
@@ -85,7 +85,11 @@ int main()
 		char input;
 		input = _getch();
 
+
+
 		player.performMove(map, input);
+
+
 
 #ifdef __linux__
 		system("clear");

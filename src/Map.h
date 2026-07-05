@@ -6,10 +6,10 @@
 #include <map>
 #include <sstream>
 
-#include "Room.h"
+#include "Entity/Enemy.h"
 #include "Item.h"
+#include "Room.h"
 #include "Utility.h"
-#include "Enemy.h"
 
 class Player;
 

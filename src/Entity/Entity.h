@@ -26,4 +26,9 @@ public:
     {
         entity.takeDamage(m_atk);
     }
+
+    std::pair<int, int> getPosition()
+    {
+        return std::make_pair(m_x, m_y);
+    }
 };

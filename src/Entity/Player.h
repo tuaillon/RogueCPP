@@ -2,8 +2,8 @@
 
 #include <iostream>
 
+#include "../Utility.h"
 #include "Entity.h"
-#include "Utility.h"
 
 class Map;
 
@@ -37,7 +37,7 @@ inline std::ostream& operator<<(std::ostream& os, Status s)
 	}
 }
 
-class Player : Entity
+class Player : public Entity
 {
 
 private:
