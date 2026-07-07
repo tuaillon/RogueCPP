@@ -1,80 +1,65 @@
 #include "Player.h"
+
 #include "../Map.h"
-
-bool Player::canPerformMove(Map& map, char action)
-{
-	int newX = m_x;
-	int newY = m_y;
-
-	switch ( action )
-	{
-	case action::UP:
-		newY--;
-		break;
-
-	case action::DOWN:
-		newY++;
-		break;
-
-	case action::LEFT:
-		newX--;
-		break;
-
-	case action::RIGHT:
-		newX++;
-		break;
-
-	default:
-		return false;
-	}
-
-	if ( newX < 0 || newY < 0 )
-		return false;
-
-	if ( newX >= map.m_max_lvlLength || newY >= map.m_max_lvlHeight )
-		return false;
-
-	if ( (*map.m_map)[newY][newX] == map.horizontalWall_representation || 
-		(*map.m_map)[newY][newX] == map.verticalWall_representation )
-		return false;
-
-	return true;
-}
+#include "Enemy.h"
 
 void Player::takeDamage(int damage)
 {
 	int actualDamage = damage - m_def;
 	if ( actualDamage > 0 )
+	{
 		m_hp -= actualDamage;
+	}
+	else
+	{
+
+	}
 }
 
 void Player::performMove(Map& map, char action)
 {
-	if ( !canPerformMove(map, action) )
-		return;
-
 	int newX = m_x;
 	int newY = m_y;
 
-	switch ( action )
+	switch ( static_cast<Action>(action) )
 	{
-
-	case action::UP:
+	case Action::UP:
 		newY--;
 		break;
 
-	case action::DOWN:
+	case Action::DOWN:
 		newY++;
 		break;
 
-	case action::LEFT:
+	case Action::LEFT:
 		newX--;
 		break;
 
-	case action::RIGHT:
+	case Action::RIGHT:
 		newX++;
 		break;
+
+	default:
+		return;
 	}
+
+	std::pair<int, int> newPos = std::make_pair(newX, newY);
+	if ( map.hasEnemyAt(newPos) )
+	{
+        Entity* enemy = map.getEnemyAt(newPos);
+		std::cout << YELLOW << "You attack the enemy!" << RESET << "\n";
+		this->performAttack(*enemy);
+		if ( enemy->isAlive() )
+		{
+			std::cout << GREEN << "The enemy is dead!" << RESET << "\n";
+			map.removeEnemy(newPos);
+		}
+		return;
+	}
+
+	if ( !canPerformMove(map, action) )
+		return;
+
 	m_y = newY;
 	m_x = newX;
 

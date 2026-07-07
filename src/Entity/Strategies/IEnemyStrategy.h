@@ -1,9 +1,12 @@
 #pragma once
 
-#include "../Player.h"
+class Enemy;
+class Map;
+class Player;
 
 class IEnemyStrategy
 {
 public:
-    inline virtual void executeStrategy(Map& map, Player& player);
+    virtual ~IEnemyStrategy() = default;
+    virtual void executeStrategy(Enemy& enemy, Map& map, Player& player) = 0;
 };

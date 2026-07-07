@@ -1,5 +1,9 @@
 #pragma once
 
+#include <utility>
+
+class Map;
+
 class Entity
 {
 
@@ -15,13 +19,16 @@ public:
 
     inline static const char representation = ' ';
 
-    virtual bool isAlive(){return m_hp > 0;}
-
+    virtual bool isAlive()
+    {
+        return m_hp > 0;
+    }
 
     virtual void takeDamage(int damage)
     {
         m_hp -= damage;
     }
+
     virtual void performAttack(Entity& entity)
     {
         entity.takeDamage(m_atk);
@@ -30,5 +37,23 @@ public:
     std::pair<int, int> getPosition()
     {
         return std::make_pair(m_x, m_y);
+    }
+
+    int getHp() const
+    {
+        return m_hp;
+    }
+
+    int getAtk() const
+    {
+        return m_atk;
+    }
+
+    bool canPerformMove(Map& map, char action);
+
+    void setPosition(int x, int y)
+    {
+        m_x = x;
+        m_y = y;
     }
 };

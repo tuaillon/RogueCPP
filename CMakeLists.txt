@@ -12,6 +12,9 @@ file(GLOB_RECURSE TOUS_LES_FICHIERS CONFIGURE_DEPENDS
 
 add_executable(RogueCPP ${TOUS_LES_FICHIERS}
         src/Entity/Strategies/IEnemyStrategy.h
-        src/Entity/Strategies/AttackStrategy.h)
+        src/Entity/Strategies/AttackStrategy.h
+        src/Entity/Strategies/WalkingStrategy.h
+        src/EventObservers/ISubscriber.h
+        src/EventObservers/LogPublisher.h)
 
 target_include_directories(RogueCPP PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/src")

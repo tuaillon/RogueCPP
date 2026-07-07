@@ -89,7 +89,13 @@ int main()
 
 		player.performMove(map, input);
 
+		map.updateEnemies(player);
 
+		if ( !player.isAlive() )
+		{
+			std::cout << RED << "Game Over! You died." << RESET << "\n";
+			gameRunning = false;
+		}
 
 #ifdef __linux__
 		system("clear");

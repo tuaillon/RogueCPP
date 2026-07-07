@@ -1,5 +1,7 @@
 #include "Map.h"
 #include "Entity/Player.h"
+#include "Entity/Enemy.h"
+#include "Item.h"
 
 Map::Map(Player& player)
 {
@@ -10,6 +12,7 @@ Map::Map(Player& player)
 
 	std::pair<int, int> playerPosition = randomReachablePosition();
 	player.setPosition(playerPosition.first, playerPosition.second);
+	lastTileVisited = std::make_pair(playerPosition, floor_representation);
 
 	initItems();
 	initEnemies();
@@ -21,6 +24,14 @@ Map::Map(Player& player)
 Map::~Map()
 {
 	delete m_map;
+	for ( auto& pair : m_enemiesOnMap )
+	{
+		delete pair.second;
+	}
+	for ( auto& pair : m_itemsOnMap )
+	{
+		delete pair.second;
+	}
 }
 
 void Map::initEnemies()
@@ -31,6 +42,7 @@ void Map::initEnemies()
 	{
 		auto enemy = EnemyCreator::createRandomEnemy();
 		std::pair<int, int> enemyPos = randomReachablePosition();
+		enemy->setPosition(enemyPos.first, enemyPos.second);
 		(*m_map)[enemyPos.second][enemyPos.first] = enemy->getRepresentation();
 		m_enemiesOnMap.insert({ enemyPos, enemy });
 	}
@@ -93,7 +105,62 @@ void Map::updatePlayerPosition(std::pair<int, int> newPosition, Player& player)
 
 	(*m_map)[newPosition.second][newPosition.first] = Player::representation;
 }
+void Map::updateEnemyPosition(std::pair<int, int> oldPosition, std::pair<int, int> newPosition, Enemy& enemy)
+{
+	(*m_map)[oldPosition.second][oldPosition.first] = floor_representation;
+	(*m_map)[newPosition.second][newPosition.first] = enemy.getRepresentation();
+	
+	m_enemiesOnMap.erase(oldPosition);
+	m_enemiesOnMap.insert({ newPosition, &enemy });
+}
 
+void Map::updateEnemies(Player& player)
+{
+	std::vector<Enemy*> enemies;
+	for ( const auto& pair : m_enemiesOnMap )
+	{
+		enemies.push_back(pair.second);
+	}
+
+	for ( Enemy* enemy : enemies )
+		if ( enemy->isAlive() )
+			enemy->executeStrategy(*this, player);
+}
+
+bool Map::hasEnemyAt(std::pair<int, int> pos) const
+{
+	return m_enemiesOnMap.find(pos) != m_enemiesOnMap.end();
+}
+
+Enemy* Map::getEnemyAt(std::pair<int, int> pos)
+{
+	auto it = m_enemiesOnMap.find(pos);
+	if ( it != m_enemiesOnMap.end() )
+	{
+		return it->second;
+	}
+	return nullptr;
+}
+
+void Map::removeEnemy(std::pair<int, int> pos)
+{
+	auto it = m_enemiesOnMap.find(pos);
+	if ( it != m_enemiesOnMap.end() )
+	{
+		(*m_map)[pos.second][pos.first] = floor_representation;
+		delete it->second;
+		m_enemiesOnMap.erase(it);
+	}
+}
+
+bool Map::isMoveValid(std::pair<int, int> pos)
+{
+	if ( pos.first < 0 || pos.first >= m_max_lvlLength || pos.second < 0 || pos.second >= m_max_lvlHeight )
+	{
+		return false;
+	}
+	return (*m_map)[pos.second][pos.first] == floor_representation;
+}
 
 void Map::display()
 {

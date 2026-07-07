@@ -6,12 +6,12 @@
 #include <map>
 #include <sstream>
 
-#include "Entity/Enemy.h"
-#include "Item.h"
 #include "Room.h"
 #include "Utility.h"
 
 class Player;
+class Enemy;
+class Item;
 
 class Map
 {
@@ -25,7 +25,14 @@ public:
 	void createCorridors();
 
 	void updatePlayerPosition(std::pair<int, int> newPosition, Player& player);
+	void updateEnemyPosition(std::pair<int, int> oldPosition, std::pair<int, int> newPosition, Enemy& enemy);
+	void updateEnemies(Player& player);
 
+	bool hasEnemyAt(std::pair<int, int> pos) const;
+	Enemy* getEnemyAt(std::pair<int, int> pos);
+	void removeEnemy(std::pair<int, int> pos);
+
+	bool isMoveValid(std::pair<int, int> pos);
 
 	void display();	
 	

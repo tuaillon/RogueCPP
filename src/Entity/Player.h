@@ -16,13 +16,6 @@ enum Status
 
 };
 
-enum action
-{
-	UP = 'z',
-	DOWN = 's',
-	LEFT = 'q',
-	RIGHT = 'd'
-};
 
 
 inline std::ostream& operator<<(std::ostream& os, Status s)
@@ -47,8 +40,6 @@ private:
 	int m_gold;
 	Status m_status;
 
-	bool canPerformMove(Map& map, char action);
-
 public:
 
 	inline static const char representation = '@';
@@ -58,12 +49,6 @@ public:
 	void performMove(Map& map, char action);
 		
 	Player();
-
-	void setPosition(int x, int y)
-	{
-		m_x = x;
-		m_y = y;
-	}
 
 	void addHealth(int amount)
 	{
