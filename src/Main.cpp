@@ -74,7 +74,8 @@ int main()
     Player player;
     Map map(player);
 
-    LogPublisher::getInstance().subscribe(new GameLogger());
+    GameLogger* logger = new GameLogger();
+    LogPublisher::getInstance().subscribe(logger);
 
     bool gameRunning = true;
 
@@ -82,6 +83,7 @@ int main()
     {
         map.display();
         player.logStats();
+        logger->displayLogs();
 
         std::cout << "Awaiting for input...\n";
 
@@ -105,5 +107,6 @@ int main()
 #endif
     }
 
+    delete logger;
     return 0;
 }

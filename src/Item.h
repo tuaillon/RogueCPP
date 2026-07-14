@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 #include "Entity/Player.h"
 
 class Item
@@ -14,6 +16,7 @@ public:
 
 	virtual char getRepresentation() const { return ' '; };
 	virtual void use(Player& player) {};
+	virtual std::string getName() const { return "Item"; };
 
 	inline static int max_items = 10;
 };
@@ -32,6 +35,8 @@ public:
 	{
 		player.addHealth(m_healingAmount);
 	}
+
+	std::string getName() const override { return "Potion"; }
 };
 
 class Weapon : public Item
@@ -47,6 +52,8 @@ public:
 	{
 		player.addAttack(m_atkBuff);
 	}
+
+	std::string getName() const override { return "Weapon"; }
 };
 
 
@@ -62,6 +69,8 @@ public:
 	{
 		player.addDefense(m_defBuff);
 	}
+
+	std::string getName() const override { return "Armor"; }
 };
 
 

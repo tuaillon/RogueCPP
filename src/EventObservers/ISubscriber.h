@@ -3,6 +3,7 @@
 class Map;
 class Player;
 class Enemy;
+class Item;
 
 enum class EventType
 {
@@ -18,6 +19,7 @@ class ISubscriber
 {
 public:
     virtual void onUpdate(Map& map, Player& player, Enemy& enemy, EventType eventType) = 0;
+    virtual void onUpdate(Map& map, Player& player, Item& item, EventType eventType) {}
     virtual ~ISubscriber() = default;
 };
 

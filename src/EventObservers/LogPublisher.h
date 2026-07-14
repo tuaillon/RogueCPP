@@ -4,6 +4,8 @@
 #include <vector>
 #include <algorithm>
 
+class Item;
+
 class LogPublisher
 {
 private:
@@ -36,5 +38,11 @@ public:
     {
         for ( auto& subscriber : m_subscribers )
             subscriber->onUpdate(map, player, *enemy, eventType);
+    }
+
+    void publish(Map& map, Player& player, Item& item, const EventType eventType) const
+    {
+        for ( auto& subscriber : m_subscribers )
+            subscriber->onUpdate(map, player, item, eventType);
     }
 };

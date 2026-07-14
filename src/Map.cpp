@@ -2,6 +2,7 @@
 #include "Entity/Player.h"
 #include "Entity/Enemy.h"
 #include "Item.h"
+#include "EventObservers/LogPublisher.h"
 
 Map::Map(Player& player)
 {
@@ -98,7 +99,10 @@ void Map::updatePlayerPosition(std::pair<int, int> newPosition, Player& player)
 	//item handling
 	if ( const auto it = m_itemsOnMap.find(newPosition); it != m_itemsOnMap.end() )
 	{
-		it->second->use(player);
+		Item* item = it->second;
+		item->use(player);
+		LogPublisher::getInstance().publish(*this, player, *item, EventType::PICKING_ITEM);
+		delete item;
 		m_itemsOnMap.erase(it);
 		lastTileVisited.second = floor_representation;
 	}

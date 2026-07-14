@@ -8,9 +8,17 @@
 #include <iostream>
 #include <string>
 
+#include "Item.h"
+
+#include <vector>
+#include "Item.h"
+
 class GameLogger : public ISubscriber
 {
 private:
+    std::vector<std::string> m_logs;
+    static const size_t m_maxLogs = 5;
+
     void onUpdate(Map &map, Player &player, Enemy &enemy, EventType eventType) override
     {
         switch ( eventType )
@@ -28,10 +36,6 @@ private:
             log(std::format("{} found a way out for this level!", global_game_rules::gPlayerName));
             break;
 
-        case EventType::PICKING_ITEM:
-            log(std::format("{} picked up an item!", global_game_rules::gPlayerName));
-            break;
-
         case EventType::GAME_OVER:
             log(std::format("{} perished!", global_game_rules::gPlayerName));
             break;
@@ -42,9 +46,16 @@ private:
 
         }
     }
-public:
 
-    void log(const std::string& info) const
+    void onUpdate(Map &map, Player &player, Item &item, EventType eventType) override
+    {
+        if ( eventType == EventType::PICKING_ITEM )
+        {
+            log(std::format("{} picked up a {}!", global_game_rules::gPlayerName, item.getName()));
+        }
+    }
+
+    void log(const std::string& info)
     {
         time_t now = time(nullptr);
         struct tm tstruct;
@@ -52,8 +63,23 @@ public:
         tstruct = *localtime(&now);
         strftime(buff, sizeof(buff), "%X", &tstruct);
 
-        std::cout << "[" << buff << "] " << info << "\n";
+        std::string formattedMsg = std::format("[{}] {}", buff, info);
+        m_logs.push_back(formattedMsg);
+    }
 
+public:
+    void displayLogs()
+    {
+        if ( m_logs.size() >= m_maxLogs )
+            emptyLogs();
+
+        for ( const auto& msg : m_logs )
+            std::cout << msg << "\n";
+    }
+
+    void emptyLogs()
+    {
+        m_logs.clear();
     }
 };
 
