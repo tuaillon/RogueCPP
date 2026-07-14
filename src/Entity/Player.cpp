@@ -2,6 +2,7 @@
 
 #include "../Map.h"
 #include "Enemy.h"
+#include "EventObservers/LogPublisher.h"
 
 void Player::takeDamage(int damage)
 {
@@ -21,21 +22,21 @@ void Player::performMove(Map& map, char action)
 	int newX = m_x;
 	int newY = m_y;
 
-	switch ( static_cast<Action>(action) )
+	switch ( static_cast<global_game_rules::Action>(action) )
 	{
-	case Action::UP:
+	case global_game_rules::Action::UP:
 		newY--;
 		break;
 
-	case Action::DOWN:
+	case global_game_rules::Action::DOWN:
 		newY++;
 		break;
 
-	case Action::LEFT:
+	case global_game_rules::Action::LEFT:
 		newX--;
 		break;
 
-	case Action::RIGHT:
+	case global_game_rules::Action::RIGHT:
 		newX++;
 		break;
 
@@ -46,12 +47,12 @@ void Player::performMove(Map& map, char action)
 	std::pair<int, int> newPos = std::make_pair(newX, newY);
 	if ( map.hasEnemyAt(newPos) )
 	{
-        Entity* enemy = map.getEnemyAt(newPos);
-		std::cout << YELLOW << "You attack the enemy!" << RESET << "\n";
+        Enemy* enemy = map.getEnemyAt(newPos);
+		LogPublisher::getInstance().publish(map, *this, enemy, EventType::PLAYER_ATTACKING);
 		this->performAttack(*enemy);
 		if ( enemy->isAlive() )
 		{
-			std::cout << GREEN << "The enemy is dead!" << RESET << "\n";
+		    LogPublisher::getInstance().publish(map, *this, enemy, EventType::ENEMY_DEAD);
 			map.removeEnemy(newPos);
 		}
 		return;
@@ -79,7 +80,7 @@ Player::Player()
 
 }
 
-void Player::logStats()
+void Player::logStats() const
 {
 	std::cout << "Level " << BLUE << m_level << RESET << "   Gold: " << 
 		YELLOW << m_gold << RESET <<

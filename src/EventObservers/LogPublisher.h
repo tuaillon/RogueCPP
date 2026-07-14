@@ -2,16 +2,7 @@
 #include "ISubscriber.h"
 
 #include <vector>
-
-enum class EventType
-{
-    PLAYER_ATTACKING,
-    ENEMY_ATTACKING_PLAYER,
-    PICKING_ITEM,
-    GAME_OVER,
-    EXIT_FOUND
-};
-
+#include <algorithm>
 
 class LogPublisher
 {
@@ -19,16 +10,16 @@ private:
     std::vector<ISubscriber*> m_subscribers;
 
     LogPublisher() = default;
-    LogPublisher instance = nullptr;
+    ~LogPublisher() = default;
+
+    LogPublisher(const LogPublisher&) = delete;
+    LogPublisher& operator=(const LogPublisher&) = delete;
 
 public:
-
     static LogPublisher& getInstance()
     {
-        if ( instance == nullptr )
-            LogPublisher instance();
-
-        return *instance;
+        static LogPublisher instance;
+        return instance;
     }
 
     void subscribe(ISubscriber* subscriber)
@@ -38,15 +29,12 @@ public:
 
     void unsubscribe(ISubscriber* subscriber)
     {
-        m_subscribers.remove(subscriber);
+        m_subscribers.erase(std::remove(m_subscribers.begin(), m_subscribers.end(), subscriber), m_subscribers.end());
     }
 
-    void publish(Map& map, Player& player, Enemy& enemy, EventType eventType)
+    void publish(Map& map, Player& player, Enemy* enemy, const EventType eventType) const
     {
-        for ( const auto& subscriber : m_subscribers )
-            subscriber->onEvent(map, player, eventType);
+        for ( auto& subscriber : m_subscribers )
+            subscriber->onUpdate(map, player, *enemy, eventType);
     }
-
-
 };
-

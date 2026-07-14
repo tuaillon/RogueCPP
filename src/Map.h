@@ -55,7 +55,7 @@ private:
 	bool canCreateRoom(int x, int y, Room room);
 	void drawRoom(int x, int y, Room room);
 
-	std::pair<int, int> randomReachablePosition();
+	std::pair<int, int> randomReachablePosition() const;
 	std::pair<std::pair<int, int>, char> lastTileVisited;
 	std::map<std::pair<int, int>, Item*> m_itemsOnMap;
 	std::map<std::pair<int, int>, Enemy*> m_enemiesOnMap;

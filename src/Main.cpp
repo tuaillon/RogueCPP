@@ -1,19 +1,19 @@
-#include <iostream>
 #include <ctime>
+#include <iostream>
 #include <string>
 
 #ifdef _WIN32
 
-  #include <conio.h>
+#include <conio.h>
 
 #else
-  
-  #include <termios.h>
-  #include <unistd.h>
-  #include <stdio.h>
 
-  inline static int _getch()
-  {
+#include <stdio.h>
+#include <termios.h>
+#include <unistd.h>
+
+inline static int _getch()
+{
     struct termios oldattr, newattr;
 
     int ch;
@@ -29,81 +29,81 @@
     tcsetattr(STDIN_FILENO, TCSANOW, &oldattr);
 
     return ch;
-  }
+}
 
 #endif
 
 #include "Entity/Player.h"
+#include "EventObservers/LogPublisher.h"
 #include "Map.h"
 #include "SaveHandler.h"
 #include "Utility.h"
+#include "Views/GameLogger.h"
 
 int main()
 {
-	srand(time(nullptr));
-	/*
-	char choice;
-	do
-	{
-		std::cout << gGameLogo << "\n\n";
-		std::cout << "[1] Start Game\n";
-		std::cout << "[2] Load Save\n";
-		std::cout << "[3] Instructions\n";
-		std::cout << "[4] Exit\n";
+    srand(time(nullptr)); /*
+     char choice;
+     do
+     {
+         std::cout << gGameLogo << "\n\n";
+         std::cout << "[1] Start Game\n";
+         std::cout << "[2] Load Save\n";
+         std::cout << "[3] Instructions\n";
+         std::cout << "[4] Exit\n";
 
-		choice = _getch();
+         choice = _getch();
 
-		switch ( choice )
-		{
-		case '1':
-			break;
-		case '2':
-			std::cout << "Load Save not implemented yet.\n";
-			break;
-		case '3':
-			std::cout << "Instructions not implemented yet.\n";
-			break;
-		case '4':
-			return 0;
+         switch ( choice )
+         {
+         case '1':
+             break;
+         case '2':
+             std::cout << "Load Save not implemented yet.\n";
+             break;
+         case '3':
+             std::cout << "Instructions not implemented yet.\n";
+             break;
+         case '4':
+             return 0;
 
-		}
-	} while ( choice != '1' );
-	*/
+         }
+     } while ( choice != '1' );
+     */
 
-	Player player;
-	Map map(player);
+    Player player;
+    Map map(player);
 
-	bool gameRunning = true;
+    LogPublisher::getInstance().subscribe(new GameLogger());
 
-	while ( gameRunning )
-	{
-		map.display();
-		player.logStats();
+    bool gameRunning = true;
 
-		std::cout << "Awaiting for input...\n";
+    while ( gameRunning )
+    {
+        map.display();
+        player.logStats();
 
-		char input;
-		input = _getch();
+        std::cout << "Awaiting for input...\n";
 
+        char input = _getch();
 
+        player.performMove(map, input);
 
-		player.performMove(map, input);
+        map.updateEnemies(player);
 
-		map.updateEnemies(player);
-
-		if ( !player.isAlive() )
-		{
-			std::cout << RED << "Game Over! You died." << RESET << "\n";
-			gameRunning = false;
-		}
+        if ( !player.isAlive() )
+        {
+            LogPublisher::getInstance().publish(map, player, nullptr ,
+                EventType::GAME_OVER);
+            gameRunning = false;
+        }
 
 #ifdef __linux__
-		system("clear");
+        system("clear");
 #elif _WIN32
-		system("cls");
+        system("cls");
 #endif
+    }
 
-	}
-
-	return 0;
+    return 0;
 }

@@ -2,6 +2,9 @@
 
 #include <string>
 
+namespace global_game_rules
+{
+
 enum class Action : char
 {
     UP = 'z',
@@ -71,7 +74,10 @@ inline const std::string gGameLogo = R"(
               ###              ###                        )";
 
 
+inline std::string gPlayerName = "Someone";
+
 inline void displayInstructions()
 {
 
+}
 }

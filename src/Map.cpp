@@ -134,7 +134,7 @@ bool Map::hasEnemyAt(std::pair<int, int> pos) const
 
 Enemy* Map::getEnemyAt(std::pair<int, int> pos)
 {
-	auto it = m_enemiesOnMap.find(pos);
+    const auto it = m_enemiesOnMap.find(pos);
 	if ( it != m_enemiesOnMap.end() )
 	{
 		return it->second;
@@ -279,7 +279,7 @@ void Map::drawRoom(int x, int y, Room room)
 	}
 }
 
-std::pair<int, int> Map::randomReachablePosition()
+std::pair<int, int> Map::randomReachablePosition() const
 {
 	int x, y;
 

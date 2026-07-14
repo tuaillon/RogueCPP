@@ -49,7 +49,7 @@ public:
         return m_atk;
     }
 
-    bool canPerformMove(Map& map, char action);
+    bool canPerformMove(const Map & map, char action);
 
     void setPosition(int x, int y)
     {

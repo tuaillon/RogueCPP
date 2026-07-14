@@ -16,8 +16,6 @@ enum Status
 
 };
 
-
-
 inline std::ostream& operator<<(std::ostream& os, Status s)
 {
 	switch ( s )
@@ -65,6 +63,6 @@ public:
 		m_atk += amount;
 	}
 
-	void logStats();
+	void logStats() const;
 
 };
