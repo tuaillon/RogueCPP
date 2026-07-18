@@ -17,6 +17,9 @@ add_executable(RogueCPP ${TOUS_LES_FICHIERS}
         src/EventObservers/ISubscriber.h
         src/EventObservers/LogPublisher.h
         src/Entity/Strategies/EscapingStrategy.h
-        src/Views/GameLogger.h)
+        src/Views/GameLogger.h
+        src/Entity/Strategies/AttackStrategy.cpp
+        src/Entity/Strategies/EscapingStrategy.cpp
+        src/Entity/Strategies/WalkingStrategy.cpp)
 
 target_include_directories(RogueCPP PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/src")

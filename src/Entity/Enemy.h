@@ -4,19 +4,16 @@
 #include "Map.h"
 #include "Player.h"
 #include "Strategies/IEnemyStrategy.h"
+#include "Strategies/AttackStrategy.h"
+#include "Strategies/WalkingStrategy.h"
+
+
 #include <cmath>
 
-enum class EnemyBehaviour
-{
-    STILL,
-    RANDOM,
-    AGGRESSIVE
-};
 
 class Enemy : public Entity
 {
   protected:
-    EnemyBehaviour m_behaviour;
     IEnemyStrategy *m_strategy;
 
   public:
@@ -25,8 +22,8 @@ class Enemy : public Entity
         delete m_strategy;
     }
 
-    Enemy(int hp = 10, int atk = 2, EnemyBehaviour behaviour = EnemyBehaviour::STILL, IEnemyStrategy *strategy = nullptr)
-        : m_behaviour(behaviour), m_strategy(strategy)
+    Enemy(int hp = 10, int atk = 2, IEnemyStrategy *strategy = nullptr)
+        : m_strategy(strategy)
     {
         m_hp = hp;
         m_atk = atk;
@@ -35,20 +32,7 @@ class Enemy : public Entity
     void executeStrategy(Map &map, Player &player)
     {
         if ( m_strategy )
-        {
             m_strategy->executeStrategy(*this, map, player);
-        }
-        else
-        {
-            if ( isNextToPlayer(map, player) )
-            {
-                performAttack(player);
-            }
-            else if ( m_behaviour == EnemyBehaviour::RANDOM )
-            {
-                moveRandomly(map);
-            }
-        }
     }
 
     void takeDamage(int damage) override
@@ -56,7 +40,7 @@ class Enemy : public Entity
         Entity::takeDamage(damage);
     }
 
-    virtual char getRepresentation() const { return 'E'; }
+    [[nodiscard]] virtual char getRepresentation() const { return 'E'; }
 
     bool isNextToPlayer(Map &map, Player &player)
     {
@@ -69,7 +53,7 @@ class Enemy : public Entity
         return (dx <= 1 && dy <= 1) && !(dx == 0 && dy == 0);
     }
 
-    void moveRandomly(Map& map)
+    void moveRandomly(Map &map)
     {
         bool valid = false;
 
@@ -82,10 +66,10 @@ class Enemy : public Entity
             nx = m_x;
             ny = m_y;
             int dir = rand() % 4;
-            if (dir == 0) ny--;
-            if (dir == 1) ny++;
-            if (dir == 2) nx--;
-            if (dir == 3) nx++;
+            if ( dir == 0 ) ny--;
+            if ( dir == 1 ) ny++;
+            if ( dir == 2 ) nx--;
+            if ( dir == 3 ) nx++;
 
             if ( map.isMoveValid(std::make_pair(nx, ny)) )
                 valid = true;
@@ -93,12 +77,10 @@ class Enemy : public Entity
         }
 
         if ( valid )
-        {
             this->performMove(map, nx, ny);
-        }
     }
 
-    void performMove(Map& map, int newX, int newY)
+    void performMove(Map &map, int newX, int newY)
     {
         std::pair<int, int> oldPos = getPosition();
         m_x = newX;
@@ -114,7 +96,7 @@ class Kestrel : public Enemy
 
     char getRepresentation() const override { return representation; }
 
-    Kestrel() : Enemy(10, 5, EnemyBehaviour::STILL, nullptr) {}
+    Kestrel() : Enemy(10, 5, new AttackStrategy()) {}
 };
 
 class Bat : public Enemy
@@ -124,7 +106,7 @@ class Bat : public Enemy
 
     char getRepresentation() const override { return representation; }
 
-    Bat() : Enemy(9, 2, EnemyBehaviour::RANDOM, nullptr) {}
+    Bat() : Enemy(9, 2, new WalkingStrategy()) {}
 };
 
 class EnemyCreator
@@ -145,7 +127,7 @@ class EnemyCreator
         }
     }
 
-    static Enemy* createRandomEnemy()
+    static Enemy *createRandomEnemy()
     {
         int randomValue = rand() % 2;
         switch ( randomValue )

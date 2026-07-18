@@ -1,13 +1,9 @@
 #pragma once
-
 #include "IEnemyStrategy.h"
 
-class WalkingStrategy : IEnemyStrategy
+class WalkingStrategy : public IEnemyStrategy
 {
 public:
-    void executeStrategy(Enemy &enemy, Map &map, Player &player) override
-    {
-        enemy.moveRandomly(map, player);
-    }
+    void executeStrategy(Enemy &enemy, Map &map, Player &player) override;
 };
 
