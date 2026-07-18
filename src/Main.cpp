@@ -42,11 +42,11 @@ inline static int _getch()
 
 int main()
 {
-    srand(time(nullptr)); /*
+    srand(time(nullptr));
      char choice;
      do
      {
-         std::cout << gGameLogo << "\n\n";
+         std::cout << global_game_rules::gGameLogo << "\n\n";
          std::cout << "[1] Start Game\n";
          std::cout << "[2] Load Save\n";
          std::cout << "[3] Instructions\n";
@@ -69,7 +69,6 @@ int main()
 
          }
      } while ( choice != '1' );
-     */
 
     Player player;
     Map map(player);
